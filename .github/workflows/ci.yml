@@ -34,3 +34,13 @@ jobs:
       - name: 单元测试与覆盖率门槛
         # engine/ 与 domain/ 覆盖率门槛见 jest.config.js（§5.12）
         run: npm test -- --coverage --ci
+
+      - name: 原生依赖版本与 SDK 版本表一致性
+        # Expo 对原生依赖做精确锁定，次版本漂移会破坏原生兼容
+        # （例：reanimated 4.7 要求 worklets 0.13）
+        run: npm run check:deps
+
+      - name: 打包校验（typecheck / lint 均无法发现打包期错误）
+        run: |
+          npx expo export --platform ios --output-dir /tmp/export-ios
+          npx expo export --platform android --output-dir /tmp/export-android
