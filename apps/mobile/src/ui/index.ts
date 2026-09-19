@@ -3,6 +3,7 @@
  *
  * 规则（设计文档 §5.2）：本目录不得依赖 features/ / api/ / stores/。
  */
+export * from './charts';
 export * from './components';
 export * from './hooks';
 export * from './primitives';
