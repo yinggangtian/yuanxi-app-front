@@ -18,4 +18,9 @@ export {
   type MeasurementStage,
   type StageProgress,
 } from './engine/StageMachine';
+export { SignalQualityBadge } from './components/SignalQualityBadge';
+export { StageProgressRing } from './components/StageProgressRing';
+export { BleServiceContext, useBleService } from './hooks/useBleService';
+export { useMeasurementSession } from './hooks/useMeasurementSession';
+export { usePreflight, type CheckStatus, type PreflightCheck } from './hooks/usePreflight';
 export { useMeasurementStore, type MeasurementPhase } from './store';
