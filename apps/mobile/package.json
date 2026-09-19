@@ -66,6 +66,7 @@
     "@babel/core": "^7.29.7",
     "@testing-library/react-native": "^14.0.1",
     "@types/jest": "^30.0.0",
+    "@types/node": "^22.20.4",
     "@types/react": "~19.2.2",
     "babel-plugin-module-resolver": "^5.0.3",
     "babel-preset-expo": "~14.0.0",
