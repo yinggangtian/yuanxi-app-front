@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * 语义 token（设计文档 §6.11）。
+ * 组件只允许引用语义 token，不直接引用色阶，深浅色切换才能自动生效。
+ */
+:root {
+  --c-bg: 245 247 249;
+  --c-surface: 255 255 255;
+  --c-surface-raised: 255 255 255;
+  --c-text-primary: 14 26 34;
+  --c-text-secondary: 107 121 133;
+  --c-text-tertiary: 149 161 171;
+  --c-border: 225 230 234;
+  --c-accent: 18 153 142;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: 10 18 23;
+    --c-surface: 18 29 36;
+    --c-surface-raised: 26 39 48;
+    --c-text-primary: 238 243 246;
+    --c-text-secondary: 142 155 165;
+    --c-text-tertiary: 110 123 133;
+    --c-border: 36 50 60;
+    --c-accent: 43 181 169;
+  }
+}
