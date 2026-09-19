@@ -15,4 +15,5 @@ export * from './SegmentedTabs';
 export * from './Sheet';
 export * from './Skeleton';
 export * from './Stepper';
+export * from './TabBar';
 export * from './Toast';

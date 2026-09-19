@@ -1,0 +1,1 @@
+export { PrivacyConsentGate } from './PrivacyConsentGate';
