@@ -104,3 +104,6 @@ export type TrendPoint = z.infer<typeof trendPointSchema>;
  */
 export const REPORT_DISCLAIMER =
   '本报告基于脉搏信号分析，仅供健康参考，不能替代医生诊断。如有不适请及时就医。';
+
+// 注：同一文案也收录在 src/lib/i18n/locales/zh-CN.ts 的 compliance.reportDisclaimer，
+// 两处必须保持一致；下方断言在文案漂移时会直接编译失败。

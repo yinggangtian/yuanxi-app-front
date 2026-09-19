@@ -1,0 +1,33 @@
+# 绑定设备 → 佩戴教学（设计文档 §4.4）
+appId: com.yuanxi.health
+name: 绑定脉搏环
+---
+- runFlow: 01-privacy-and-login.yaml
+
+- tapOn: '脉诊'
+- tapOn: '去绑定设备'
+
+# MockBleService 约 1.2s 后「发现」设备
+- extendedWaitUntil:
+    visible:
+      id: 'discovered-mock-device-0001'
+    timeout: 10000
+- tapOn:
+    id: 'discovered-mock-device-0001'
+
+- extendedWaitUntil:
+    visible:
+      id: 'device-bind'
+    timeout: 10000
+- tapOn:
+    id: 'device-bind'
+
+# 绑定成功后进入佩戴教学三步
+- assertVisible: '佩戴在腕骨上方两指处'
+- tapOn:
+    id: 'wear-guide-next'
+- tapOn:
+    id: 'wear-guide-next'
+- tapOn: '我已戴好'
+- tapOn:
+    id: 'wear-guide-next'

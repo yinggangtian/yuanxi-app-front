@@ -1,0 +1,19 @@
+# 隐私协议 → 登录（设计文档 §8 / §4.7）
+appId: com.yuanxi.health
+name: 隐私协议与登录
+---
+- launchApp:
+    clearState: true
+
+# §8：同意前不得展示任何业务内容
+- assertVisible:
+    id: 'privacy-consent-gate'
+
+# 必须两项都勾选（健康数据需单独同意）
+- tapOn: '我已阅读并同意《用户协议》与《隐私政策》'
+- tapOn: '我同意元息处理我的健康数据（脉搏信号、脉象与体质分析结果），用于生成健康报告'
+- tapOn:
+    id: 'privacy-accept'
+
+- assertNotVisible:
+    id: 'privacy-consent-gate'

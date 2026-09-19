@@ -1,0 +1,28 @@
+# 脉诊 → 报告（设计文档 §4.2 / §4.3）
+appId: com.yuanxi.health
+name: 脉诊到报告
+---
+- runFlow: 02-bind-device.yaml
+
+# 预检三项通过后「开始测量」才可点击
+- extendedWaitUntil:
+    visible: '开始测量'
+    timeout: 15000
+- tapOn:
+    id: 'pulse-start'
+
+# 测量约 75s（阶段表合计），分析另需约 2s
+- assertVisible: '次/分'
+- extendedWaitUntil:
+    visible: '正在生成报告'
+    timeout: 120000
+
+- extendedWaitUntil:
+    visible: '体质归因'
+    timeout: 30000
+
+# §4.3.2 / §8：报告底部必须有免责声明
+- scrollUntilVisible:
+    element:
+      text: '不能替代医生诊断'
+    direction: DOWN

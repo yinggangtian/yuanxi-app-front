@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    name: 类型检查 / Lint / 单元测试
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: TypeScript 类型检查
+        run: npm run typecheck
+
+      - name: ESLint（含 §5.2 分层依赖边界校验）
+        run: npm run lint
+
+      - name: 单元测试与覆盖率门槛
+        # engine/ 与 domain/ 覆盖率门槛见 jest.config.js（§5.12）
+        run: npm test -- --coverage --ci
