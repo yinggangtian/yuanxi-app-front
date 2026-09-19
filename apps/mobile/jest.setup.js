@@ -2,40 +2,27 @@
 // RNTL v14 起内置 jest matchers，无需再引入 extend-expect。
 
 // MMKV 在 Node 环境下没有原生实现，用内存 Map 替身。
+// MMKV v4 走 Nitro 原生模块，Node 环境下用内存 Map 替身。
 jest.mock('react-native-mmkv', () => {
-  class MMKV {
-    constructor() {
-      this.store = new Map();
-    }
-    set(k, v) {
-      this.store.set(k, v);
-    }
-    getString(k) {
-      const v = this.store.get(k);
-      return typeof v === 'string' ? v : undefined;
-    }
-    getBoolean(k) {
-      const v = this.store.get(k);
-      return typeof v === 'boolean' ? v : undefined;
-    }
-    getNumber(k) {
-      const v = this.store.get(k);
-      return typeof v === 'number' ? v : undefined;
-    }
-    contains(k) {
-      return this.store.has(k);
-    }
-    delete(k) {
-      this.store.delete(k);
-    }
-    clearAll() {
-      this.store.clear();
-    }
-    getAllKeys() {
-      return [...this.store.keys()];
-    }
-  }
-  return { MMKV };
+  const createMMKV = () => {
+    const store = new Map();
+    return {
+      id: 'test',
+      get length() {
+        return store.size;
+      },
+      set: (k, v) => store.set(k, v),
+      getString: (k) => (typeof store.get(k) === 'string' ? store.get(k) : undefined),
+      getBoolean: (k) => (typeof store.get(k) === 'boolean' ? store.get(k) : undefined),
+      getNumber: (k) => (typeof store.get(k) === 'number' ? store.get(k) : undefined),
+      contains: (k) => store.has(k),
+      remove: (k) => store.delete(k),
+      clearAll: () => store.clear(),
+      getAllKeys: () => [...store.keys()],
+      addOnValueChangedListener: () => ({ remove: () => {} }),
+    };
+  };
+  return { createMMKV, existsMMKV: () => false, deleteMMKV: () => {} };
 });
 
 jest.mock('expo-secure-store', () => ({
