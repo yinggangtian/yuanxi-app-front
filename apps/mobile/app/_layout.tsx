@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { PrivacyConsentGate } from '@/features/consent';
+import { PrivacyConsentGate, RouteGuard } from '@/features/consent';
 import { createQueryClient } from '@/lib/queryClient';
 import { useAppStore, useSessionStore } from '@/stores';
 import { ToastProvider, useTheme } from '@/ui';
@@ -39,7 +39,9 @@ export default function RootLayout() {
           <ToastProvider>
             <ThemedStatusBar />
             <PrivacyConsentGate>
-              <RootNavigator />
+              <RouteGuard>
+                <RootNavigator />
+              </RouteGuard>
             </PrivacyConsentGate>
           </ToastProvider>
         </QueryClientProvider>
