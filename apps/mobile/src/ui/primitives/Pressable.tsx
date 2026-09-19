@@ -6,8 +6,6 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import { MIN_HIT_SIZE } from '../tokens';
-
 export interface PressableProps extends Omit<RNPressableProps, 'style'> {
   style?: StyleProp<ViewStyle>;
   /** 按下时的不透明度，默认 0.7（§6.7 motion-fast 语义）。 */
@@ -42,5 +40,3 @@ export function Pressable({
     />
   );
 }
-
-export { MIN_HIT_SIZE };

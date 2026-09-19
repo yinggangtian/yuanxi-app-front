@@ -21,7 +21,7 @@ module.exports = defineConfig([
         'warn',
         {
           groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
-          'newlines-between': 'always',
+          'newlines-between': 'always-and-inside-groups',
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
