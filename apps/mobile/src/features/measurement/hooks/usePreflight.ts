@@ -66,9 +66,18 @@ export function usePreflight(deviceId: string | null) {
     };
   }, [deviceId, service, setConnectionState, setDeviceInfo]);
 
-  /** 连接就绪后试采 3s 评估贴合度；setState 只发生在定时器回调中。 */
+  /**
+   * 连接就绪后试采 3s 评估贴合度；setState 只发生在定时器回调中。
+   *
+   * 依赖用 `linkReady` 而不是 `connectionState`：试采本身会把连接态推进到
+   * `measuring`，若直接依赖 `connectionState`，effect 会被自己触发的状态变化
+   * 反复清理 / 重建（stopMeasurement → ready → startMeasurement → measuring → …），
+   * 形成无限渲染循环。
+   */
+  const linkReady = connectionState === 'ready' || connectionState === 'measuring';
+
   useEffect(() => {
-    if (connectionState !== 'ready' || fitResult !== null) return;
+    if (!linkReady || fitResult !== null) return;
 
     const engine = new SignalQualityEngine();
     const unsubscribe = service.onSamples((batch) => engine.push(batch.samples));
@@ -85,7 +94,7 @@ export function usePreflight(deviceId: string | null) {
       unsubscribe();
       void service.stopMeasurement().catch(() => undefined);
     };
-  }, [connectionState, fitResult, fitAttempt, service]);
+  }, [linkReady, fitResult, fitAttempt, service]);
 
   /** 由试采结果与连接态推导贴合检查状态。达到「良」以上即合格（§4.4.3）。 */
   const fitStatus: CheckStatus =
